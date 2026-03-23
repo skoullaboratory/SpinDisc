@@ -22,6 +22,7 @@
   "build": {
     "appId": "com.spindisc.app",
     "productName": "SpinDisc",
+    "icon": "img/SpinDiscLogo.png",
     "win": {
       "target": "nsis"
     },

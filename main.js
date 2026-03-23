@@ -16,6 +16,7 @@ function createWindow() {
   const winHeight = 160;
 
   win = new BrowserWindow({
+    icon: path.join(__dirname, 'img', 'SpinDiscLogo.png'),
     width: winWidth,
     height: winHeight,
     x: screenWidth - winWidth - 30,

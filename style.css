@@ -154,7 +154,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: transform 0.2s ease, filter 0.2s ease;
+  opacity: 0;
+  transition: transform 0.2s ease, filter 0.2s ease, opacity 0.2s ease;
 }
 
 #play-pause-btn svg {
@@ -165,6 +166,7 @@ body {
 }
 
 #center-hole:hover #play-pause-btn {
+  opacity: 1;
   transform: scale(1.1);
   filter: brightness(1.2);
 }
