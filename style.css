@@ -32,6 +32,7 @@ body {
   justify-content: center;
   align-items: center;
   perspective: 1000px;
+  background: rgba(0, 0, 0, 0.001); /* catch hover on transparent areas */
 }
 
 #circle-shadow {
@@ -42,7 +43,6 @@ body {
   width: 82%;
   height: 82%;
   border-radius: 50%;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
   z-index: 1;
   background: rgba(0, 0, 0, 0.2);
 }
@@ -191,58 +191,80 @@ body {
   /* Crucial: let everything pass to #rotator except buttons */
 }
 
-#close-btn {
+#button-group {
   position: absolute;
-  top: 10%;
-  right: 10%;
-  width: 32px;
-  height: 32px;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(5px);
-  border: 1px solid var(--glass-border);
+  top: 50%;
+  left: 50%;
+  width: var(--disc-size);
+  height: var(--disc-size);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.ui-btn-wrapper {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 26px;
+  height: 50%;
+  margin-left: -13px;
+  transform-origin: bottom center;
+  pointer-events: none;
+}
+
+.ui-btn {
+  width: 26px;
+  height: 26px;
+  margin-top: 8px; /* distance from the outer edge of the CD */
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  opacity: 0.15; /* Always slightly visible so user knows they are there */
+  transition: opacity 0.3s ease, background 0.2s ease;
   pointer-events: auto;
-  opacity: 0;
-  transition: opacity 0.3s ease, transform 0.2s ease, background 0.2s ease;
   -webkit-app-region: no-drag;
 }
 
-#close-btn svg {
+/* Position along the top-right curve */
+#wrapper-zoom-out { transform: rotate(30deg); }
+#wrapper-zoom-out .ui-btn { transform: rotate(-30deg); }
+
+#wrapper-zoom-in { transform: rotate(55deg); }
+#wrapper-zoom-in .ui-btn { transform: rotate(-55deg); }
+
+#wrapper-close { transform: rotate(80deg); }
+#wrapper-close .ui-btn { transform: rotate(-80deg); }
+
+
+.ui-btn svg {
   fill: white;
-  width: 18px;
-  height: 18px;
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s ease;
 }
 
-#app-container:hover #close-btn {
-  opacity: 1;
+#app-container:hover .ui-btn {
+  opacity: 0.8;
+}
+
+.ui-btn:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  opacity: 1 !important;
+}
+
+.ui-btn:hover svg {
+  transform: scale(1.2);
 }
 
 #close-btn:hover {
-  background: rgba(255, 60, 60, 0.8);
-  transform: scale(1.1);
-}
-
-#resize-handle {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 24px;
-  height: 24px;
-  cursor: nwse-resize;
-  pointer-events: auto;
-  -webkit-app-region: no-drag;
-  /* Making it feel modern with a minimalist geometric grip */
-  background: linear-gradient(135deg, transparent 50%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0.4) 60%, transparent 60%, transparent 70%, rgba(255, 255, 255, 0.4) 70%, rgba(255, 255, 255, 0.4) 80%, transparent 80%, transparent 90%, rgba(255, 255, 255, 0.4) 90%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-#app-container:hover #resize-handle {
-  opacity: 1;
+  background: rgba(255, 60, 60, 0.9) !important;
 }
 
 @keyframes spin {

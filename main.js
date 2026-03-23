@@ -12,8 +12,8 @@ let lastMoveTime = 0;
 function createWindow() {
   const primaryDisplay = screen.getPrimaryDisplay();
   const { width: screenWidth, height: screenHeight } = primaryDisplay.workAreaSize;
-  const winWidth = 120;
-  const winHeight = 120;
+  const winWidth = 160;
+  const winHeight = 160;
 
   win = new BrowserWindow({
     width: winWidth,
@@ -37,7 +37,7 @@ function createWindow() {
 
   win.setAspectRatio(1.0);
   win.loadFile('index.html');
-  
+
   // High-priority always-on-top
   win.setAlwaysOnTop(true, 'screen-saver', 1);
   win.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
@@ -65,10 +65,10 @@ function startMediaMonitoring() {
 
   function spawnWorker() {
     worker = fork(workerPath, [], { stdio: ['pipe', 'pipe', 'pipe', 'ipc'] });
-    
+
     worker.on('message', (msg) => {
       if (!win || win.isDestroyed()) return;
-      
+
       if (msg.type === 'thumbnail') {
         win.webContents.send('media-thumbnail', msg.base64);
       } else if (msg.type === 'status') {
@@ -81,16 +81,19 @@ function startMediaMonitoring() {
       setTimeout(spawnWorker, 5000);
     });
 
-    worker.on('error', () => {}); // Ignore spawn errors
+    worker.on('error', () => { }); // Ignore spawn errors
   }
 
   spawnWorker();
 }
 
-ipcMain.on('resize-window', (event, newSize) => {
+ipcMain.on('zoom-window', (event, delta) => {
   const window = BrowserWindow.fromWebContents(event.sender);
   if (window && !window.isDestroyed()) {
-    window.setSize(Math.round(newSize), Math.round(newSize));
+    const [width, height] = window.getSize();
+    const step = 40;
+    const newSize = Math.max(60, Math.min(600, width + (delta * step)));
+    window.setSize(newSize, newSize);
   }
 });
 

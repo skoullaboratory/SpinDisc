@@ -1,45 +1,18 @@
 const discMedia = document.getElementById('disc-media');
-const resizeHandle = document.getElementById('resize-handle');
+const zoomInBtn = document.getElementById('zoom-in-btn');
+const zoomOutBtn = document.getElementById('zoom-out-btn');
 const rotator = document.getElementById('rotator');
 const centerHole = document.getElementById('center-hole');
 const playIcon = document.getElementById('play-icon');
 const pauseIcon = document.getElementById('pause-icon');
 const { ipcRenderer } = require('electron');
 
-let isResizing = false;
-let rafId = null;
+zoomInBtn.addEventListener('click', () => {
+  ipcRenderer.send('zoom-window', 1); // 1 for zoom in
+});
 
-resizeHandle.addEventListener('mousedown', (e) => {
-  e.stopPropagation();
-  isResizing = true;
-
-  const startMouseX = e.screenX;
-  const startWidth = window.innerWidth;
-
-  const onMouseMove = (moveEvent) => {
-    if (!isResizing) return;
-    if (rafId) return;
-
-    rafId = requestAnimationFrame(() => {
-      const deltaX = moveEvent.screenX - startMouseX;
-      const newSize = Math.max(60, startWidth + deltaX);
-      ipcRenderer.send('resize-window', newSize);
-      rafId = null;
-    });
-  };
-
-  const onMouseUp = () => {
-    isResizing = false;
-    if (rafId) {
-      cancelAnimationFrame(rafId);
-      rafId = null;
-    }
-    document.removeEventListener('mousemove', onMouseMove);
-    document.removeEventListener('mouseup', onMouseUp);
-  };
-
-  document.addEventListener('mousemove', onMouseMove);
-  document.addEventListener('mouseup', onMouseUp);
+zoomOutBtn.addEventListener('click', () => {
+  ipcRenderer.send('zoom-window', -1); // -1 for zoom out
 });
 
 centerHole.addEventListener('click', () => {
