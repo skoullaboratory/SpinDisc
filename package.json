@@ -1,20 +1,38 @@
 {
   "name": "spindisc",
   "version": "1.0.0",
-  "description": "",
+  "description": "Premium music disc PiP overlay with real-time SMTC synchronization.",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "electron-builder build --win"
   },
   "keywords": [],
-  "author": "",
+  "author": "Danie",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "electron": "^41.0.3"
+    "electron": "^41.0.3",
+    "electron-builder": "^26.1.1"
   },
   "dependencies": {
     "@coooookies/windows-smtc-monitor": "^1.0.12"
+  },
+  "build": {
+    "appId": "com.spindisc.app",
+    "productName": "SpinDisc",
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": false,
+      "createDesktopShortcut": true
+    },
+    "directories": {
+      "output": "dist"
+    }
   }
 }

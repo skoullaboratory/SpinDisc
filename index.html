@@ -9,12 +9,34 @@
 </head>
 
 <body>
-  <div id="circle-container">
+  <div id="app-container">
+    <div id="circle-shadow"></div>
     <div id="rotator">
-      <div id="circle">
-        <div id="close-btn" onclick="window.close()">&times;</div>
-        <div id="resize-handle"></div>
+      <div id="disc-media"></div>
+      <div id="disc-texture"></div>
+    </div>
+    <div id="static-overlay">
+      <div id="light-reflection"></div>
+      <div id="center-hole">
+        <div id="inner-ring"></div>
+        <div id="play-pause-btn">
+          <svg id="play-icon" viewBox="0 0 24 24" width="24" height="24">
+            <path d="M6 5v14l12-7z" />
+          </svg>
+          <svg id="pause-icon" viewBox="0 0 24 24" width="24" height="24" style="display:none;">
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+          </svg>
+        </div>
       </div>
+    </div>
+    <div id="ui-layer">
+      <div id="close-btn" onclick="window.close()">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <path
+            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+        </svg>
+      </div>
+      <div id="resize-handle"></div>
     </div>
   </div>
   <script src="renderer.js"></script>

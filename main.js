@@ -3,6 +3,8 @@ const path = require('path');
 const { fork } = require('child_process');
 
 app.disableHardwareAcceleration();
+// Set a unique user data path for this app to avoid "Access denied" cache errors
+app.setPath('userData', path.join(app.getPath('userData'), 'SpinDisc-PiP'));
 
 let win;
 let lastMoveTime = 0;
@@ -90,6 +92,13 @@ ipcMain.on('resize-window', (event, newSize) => {
   if (window && !window.isDestroyed()) {
     window.setSize(Math.round(newSize), Math.round(newSize));
   }
+});
+
+ipcMain.on('toggle-playback', () => {
+  const { exec } = require('child_process');
+  // Robust PowerShell command using User32 keybd_event to toggle play/pause correctly
+  const psCommand = `powershell -Command "Add-Type -TypeDefinition 'using System.Runtime.InteropServices; public class Media { [DllImport(\\\"user32.dll\\\")] public static extern void keybd_event(byte v, byte s, uint f, int e); }'; [Media]::keybd_event(0xB3, 0, 0, 0); [Media]::keybd_event(0xB3, 0, 2, 0);"`;
+  exec(psCommand);
 });
 
 app.whenReady().then(() => {
