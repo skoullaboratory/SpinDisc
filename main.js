@@ -1,0 +1,106 @@
+const { app, BrowserWindow, screen, ipcMain } = require('electron');
+const path = require('path');
+const { fork } = require('child_process');
+
+app.disableHardwareAcceleration();
+
+let win;
+let lastMoveTime = 0;
+
+function createWindow() {
+  const primaryDisplay = screen.getPrimaryDisplay();
+  const { width: screenWidth, height: screenHeight } = primaryDisplay.workAreaSize;
+  const winWidth = 120;
+  const winHeight = 120;
+
+  win = new BrowserWindow({
+    width: winWidth,
+    height: winHeight,
+    x: screenWidth - winWidth - 30,
+    y: screenHeight - winHeight - 30,
+    transparent: true,
+    frame: false,
+    alwaysOnTop: true,
+    resizable: true,
+    minWidth: 60,
+    minHeight: 60,
+    movable: true,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+    hasShadow: false,
+    skipTaskbar: true, // PiP style, no need for taskbar icon
+  });
+
+  win.setAspectRatio(1.0);
+  win.loadFile('index.html');
+  
+  // High-priority always-on-top
+  win.setAlwaysOnTop(true, 'screen-saver', 1);
+  win.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
+
+  win.on('move', () => {
+    lastMoveTime = Date.now();
+  });
+
+  // Reinforce top and visibility on focus/blur
+  win.on('blur', () => {
+    if (win && !win.isDestroyed()) {
+      win.setAlwaysOnTop(true, 'screen-saver', 1);
+    }
+  });
+}
+
+let isMonitoringStarted = false;
+
+function startMediaMonitoring() {
+  if (isMonitoringStarted) return;
+  isMonitoringStarted = true;
+
+  const workerPath = path.join(__dirname, 'smtc-worker.js');
+  let worker = null;
+
+  function spawnWorker() {
+    worker = fork(workerPath, [], { stdio: ['pipe', 'pipe', 'pipe', 'ipc'] });
+    
+    worker.on('message', (msg) => {
+      if (!win || win.isDestroyed()) return;
+      
+      if (msg.type === 'thumbnail') {
+        win.webContents.send('media-thumbnail', msg.base64);
+      } else if (msg.type === 'status') {
+        win.webContents.send('media-status', msg.playing);
+      }
+    });
+
+    worker.on('exit', () => {
+      // The worker crashed natively! Restart it stealthily in 5 seconds without crashing the main app!
+      setTimeout(spawnWorker, 5000);
+    });
+
+    worker.on('error', () => {}); // Ignore spawn errors
+  }
+
+  spawnWorker();
+}
+
+ipcMain.on('resize-window', (event, newSize) => {
+  const window = BrowserWindow.fromWebContents(event.sender);
+  if (window && !window.isDestroyed()) {
+    window.setSize(Math.round(newSize), Math.round(newSize));
+  }
+});
+
+app.whenReady().then(() => {
+  createWindow();
+  startMediaMonitoring();
+
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
+});
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') app.quit();
+});
