@@ -1,30 +1,55 @@
 <p align="center">
-  <img src="img/SpinDiscLogo2.png" width="200">
+  <img src="img/SpinDiscLogo2.png" width="220">
 </p>
 
-# SpinDisc
+<h1 align="center">SPINDISC</h1>
 
-SpinDisc is a circular, minimalist "Picture-in-Picture" (PiP) music player overlay for Windows. It acts as a transparent, frameless, and interactive desktop widget that simulates a physical record or CD, reacting in real-time to your system's media playback.
+<p align="center">
+  <b>A Minimalist "Picture-in-Picture" Media Overlay for Windows</b><br>
+  <i>Merging physical vinyl aesthetics with digital media synchronization.</i>
+</p>
 
-## Features
+---
 
-- **Real-Time Media Synchronization:** The disc rotates smoothly when music is playing and stops automatically when paused. It detects media via Windows SMTC (system media transport controls) and works with Spotify, YouTube, web browsers, and most native Windows media players.
-- **Live Thumbnails:** Captures and displays the album art or thumbnail of the currently playing track directly on the surface of the disc.
-- **Always on Top:** Floats transparently over any window, making it ideal for coding, designing, or gaming workspaces.
-- **Dynamic Design:** Features a curveless, frameless design with realistic vinyl reflections and glassmorphism hover effects.
-- **Integrated Controls:** 
-  - **Click to Play/Pause:** Click the center hole of the disc to toggle playback without opening the source application.
-  - **Curved UI Controls:** Semi-transparent controls that follow the natural curvature of the disc to zoom in, zoom out, or close the application.
-- **Seamless Performance:** Audio monitoring is handled by a separate background worker process to guarantee UI fluidity and prevent application crashes.
+### [ PROJECT OVERVIEW ]
 
-## Usage
+**SpinDisc** is a circular, transparent, and frameless desktop widget designed to simulate a physical record or CD. It acts as an interactive overlay that reacts in real-time to your system's media playback, providing a glassmorphism-inspired UI for your workspace.
 
-1. Launch SpinDisc.
-2. Play media from your preferred application (Spotify, browser, etc.).
-3. The disc will automatically sync the album art and start rotating.
-4. Drag the disc from anywhere on its surface to position it on your screen.
-5. Hover over the top-right curve to access zoom and close controls.
+### [ CORE SPECIFICATIONS ]
 
-## License
+| Feature | Description |
+| :--- | :--- |
+| **Media Sync** | Real-time rotation via Windows SMTC (Spotify, YouTube, Browsers). |
+| **Visuals** | Dynamic album art mapping with realistic vinyl reflections. |
+| **Layering** | Always-on-top functionality for seamless integration with IDEs or Games. |
+| **Interface** | Frameless, curveless design with integrated glassmorphism controls. |
 
-ISC License
+---
+
+### [ SYSTEM CAPABILITIES ]
+
+* **DYNAMIC ROTATION**
+  The disc physics are tied to your playback state. It rotates smoothly during active sessions and halts immediately upon pause.
+  
+* **INTEGRATED CONTROL CORE**
+  - **Center Hole:** Single-click to toggle Play/Pause.
+  - **Curved UI:** Transparent overlays for scaling (Zoom In/Out) and termination.
+  
+* **FLUID PERFORMANCE**
+  Audio monitoring is decoupled into a dedicated background worker process. This ensures the UI remains responsive and prevents main-thread bottlenecks.
+
+---
+
+### [ OPERATIONAL GUIDE ]
+
+1. **INITIALIZE:** Execute `SpinDisc.exe`.
+2. **SYNC:** Play media from any Windows-compliant source.
+3. **MANIPULATE:** Click and drag anywhere on the disc surface to reposition.
+4. **ADJUST:** Hover over the top-right curvature to access scaling parameters.
+
+---
+
+### [ SUPPORT THE LABORATORY ]
+
+I am a professional web and game developer. While **SpinDisc** is a hobby project, every contribution brings me closer to developing my first full-scale independent video game.<br>
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/skoullaboratory)
