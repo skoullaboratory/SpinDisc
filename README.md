@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="img/SpinDiscLogo.png" width="200">
+  <img src="img/SpinDiscLogo2.png" width="200">
 </p>
 
 # SpinDisc
