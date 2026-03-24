@@ -42,14 +42,28 @@
 
 ### [ OPERATIONAL GUIDE ]
 
-1. **INITIALIZE:** Execute `SpinDisc.exe`.
+1. **INITIALIZE:** Execute `SpinDisc.Setup.exe` to install it.
 2. **SYNC:** Play media from any Windows-compliant source.
 3. **MANIPULATE:** Click and drag anywhere on the disc surface to reposition.
 4. **ADJUST:** Hover over the top-right curvature to access scaling parameters.
 
 ---
 
+### [ SECURITY & EXECUTION ]
+Note on Windows SmartScreen: As this is an independently developed hobby project, the executable is not currently signed with a commercial Microsoft certificate. This may trigger a "Windows Protected Your PC" warning during the initial launch.
+
+To execute the application:
+
+Click on "More Info".
+
+Select "Run Anyway".
+
+This warning is a standard security measure for software from unverified publishers and does not indicate a security risk. As a developer, I prioritize system integrity; however, acquiring a digital signature remains a future milestone for the Laboratory as the project scales.
+
+---
+
 ### [ SUPPORT THE LABORATORY ]
 
 I am a professional web and game developer. While **SpinDisc** is a hobby project, every contribution brings me closer to developing my first full-scale independent video game.<br>
+<br>
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/skoullaboratory)
