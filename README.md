@@ -21,21 +21,6 @@ SpinDisc is a circular, minimalist "Picture-in-Picture" (PiP) music player overl
 4. Drag the disc from anywhere on its surface to position it on your screen.
 5. Hover over the top-right curve to access zoom and close controls.
 
-## Development
-
-Clone the repository and install dependencies:
-
-```bash
-npm install
-npm start
-```
-
-To build a standalone Windows installer:
-
-```bash
-npm run build
-```
-
 ## License
 
 ISC License
