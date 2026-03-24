@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="img/SpinDiscLogo.png" width="200">
+</p>
+
 # SpinDisc
 
 SpinDisc is a circular, minimalist "Picture-in-Picture" (PiP) music player overlay for Windows. It acts as a transparent, frameless, and interactive desktop widget that simulates a physical record or CD, reacting in real-time to your system's media playback.
