@@ -1,6 +1,6 @@
 {
   "name": "spindisc",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Premium music disc PiP overlay with real-time SMTC synchronization.",
   "main": "main.js",
   "scripts": {
@@ -24,13 +24,16 @@
     "productName": "SpinDisc",
     "icon": "img/SpinDiscLogo.png",
     "win": {
-      "target": "nsis"
+      "target": "nsis",
+      "icon": "img/SpinDiscLogo.png"
     },
     "nsis": {
       "oneClick": true,
       "perMachine": false,
       "allowToChangeInstallationDirectory": false,
-      "createDesktopShortcut": true
+      "createDesktopShortcut": true,
+      "installerIcon": "img/SpinDiscLogo.png",
+      "uninstallerIcon": "img/SpinDiscLogo.png"
     },
     "directories": {
       "output": "dist"

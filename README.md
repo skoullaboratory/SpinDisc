@@ -13,6 +13,8 @@ SpinDisc is a circular, minimalist "Picture-in-Picture" (PiP) music player overl
   - **Curved UI Controls:** Semi-transparent controls that follow the natural curvature of the disc to zoom in, zoom out, or close the application.
 - **Seamless Performance:** Audio monitoring is handled by a separate background worker process to guarantee UI fluidity and prevent application crashes.
 
+
+
 ## Usage
 
 1. Launch SpinDisc.
