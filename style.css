@@ -244,19 +244,19 @@ body {
 }
 
 #wrapper-seek-back {
-  transform: rotate(155deg);
-}
-
-#wrapper-seek-back .ui-btn {
-  transform: rotate(-155deg);
-}
-
-#wrapper-seek-fwd {
   transform: rotate(205deg);
 }
 
-#wrapper-seek-fwd .ui-btn {
+#wrapper-seek-back .ui-btn {
   transform: rotate(-205deg);
+}
+
+#wrapper-seek-fwd {
+  transform: rotate(155deg);
+}
+
+#wrapper-seek-fwd .ui-btn {
+  transform: rotate(-155deg);
 }
 
 #wrapper-zoom-out {
