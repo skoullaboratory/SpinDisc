@@ -3,7 +3,6 @@ const path = require('path');
 const { fork } = require('child_process');
 
 app.disableHardwareAcceleration();
-// Set a unique user data path for this app to avoid "Access denied" cache errors
 app.setPath('userData', path.join(app.getPath('userData'), 'SpinDisc-PiP'));
 
 let win;
@@ -33,21 +32,16 @@ function createWindow() {
       contextIsolation: false,
     },
     hasShadow: false,
-    skipTaskbar: true, // PiP style, no need for taskbar icon
+    skipTaskbar: true,
+    focusable: false,
   });
 
   win.setAspectRatio(1.0);
   win.loadFile('index.html');
-
-  // High-priority always-on-top
   win.setAlwaysOnTop(true, 'screen-saver', 1);
   win.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
 
-  win.on('move', () => {
-    lastMoveTime = Date.now();
-  });
-
-  // Reinforce top and visibility on focus/blur
+  win.on('move', () => { lastMoveTime = Date.now(); });
   win.on('blur', () => {
     if (win && !win.isDestroyed()) {
       win.setAlwaysOnTop(true, 'screen-saver', 1);
@@ -56,35 +50,21 @@ function createWindow() {
 }
 
 let isMonitoringStarted = false;
-
 function startMediaMonitoring() {
   if (isMonitoringStarted) return;
   isMonitoringStarted = true;
-
   const workerPath = path.join(__dirname, 'smtc-worker.js');
   let worker = null;
-
   function spawnWorker() {
     worker = fork(workerPath, [], { stdio: ['pipe', 'pipe', 'pipe', 'ipc'] });
-
     worker.on('message', (msg) => {
       if (!win || win.isDestroyed()) return;
-
-      if (msg.type === 'thumbnail') {
-        win.webContents.send('media-thumbnail', msg.base64);
-      } else if (msg.type === 'status') {
-        win.webContents.send('media-status', msg.playing);
-      }
+      if (msg.type === 'thumbnail') win.webContents.send('media-thumbnail', msg.base64);
+      else if (msg.type === 'status') win.webContents.send('media-status', msg.playing);
     });
-
-    worker.on('exit', () => {
-      // The worker crashed natively! Restart it stealthily in 5 seconds without crashing the main app!
-      setTimeout(spawnWorker, 5000);
-    });
-
-    worker.on('error', () => { }); // Ignore spawn errors
+    worker.on('exit', () => setTimeout(spawnWorker, 5000));
+    worker.on('error', () => { });
   }
-
   spawnWorker();
 }
 
@@ -98,17 +78,21 @@ ipcMain.on('zoom-window', (event, delta) => {
   }
 });
 
-ipcMain.on('toggle-playback', () => {
+function sendMediaKey(vkCode) {
   const { exec } = require('child_process');
-  // Robust PowerShell command using User32 keybd_event to toggle play/pause correctly
-  const psCommand = `powershell -Command "Add-Type -TypeDefinition 'using System.Runtime.InteropServices; public class Media { [DllImport(\\\"user32.dll\\\")] public static extern void keybd_event(byte v, byte s, uint f, int e); }'; [Media]::keybd_event(0xB3, 0, 0, 0); [Media]::keybd_event(0xB3, 0, 2, 0);"`;
+  const psCommand = `powershell -Command "Add-Type -TypeDefinition 'using System.Runtime.InteropServices; public class Media { [DllImport(\\\"user32.dll\\\")] public static extern void keybd_event(byte v, byte s, uint f, int e); }'; [Media]::keybd_event(0x${vkCode}, 0, 0, 0); [Media]::keybd_event(0x${vkCode}, 0, 2, 0);"`;
   exec(psCommand);
-});
+}
+
+ipcMain.on('toggle-playback', () => sendMediaKey('B3'));
+ipcMain.on('media-prev', () => sendMediaKey('B1'));
+ipcMain.on('media-next', () => sendMediaKey('B0'));
+ipcMain.on('media-seek-back', () => sendMediaKey('25'));
+ipcMain.on('media-seek-fwd', () => sendMediaKey('27'));
 
 app.whenReady().then(() => {
   createWindow();
   startMediaMonitoring();
-
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });

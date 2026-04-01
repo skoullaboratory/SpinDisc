@@ -21,7 +21,7 @@
         <div id="inner-ring"></div>
         <div id="play-pause-btn">
           <svg id="play-icon" viewBox="0 0 24 24" width="24" height="24">
-            <path d="M6 5v14l12-7z" />
+            <path d="M8 5v14l11-7z" />
           </svg>
           <svg id="pause-icon" viewBox="0 0 24 24" width="24" height="24" style="display:none;">
             <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
@@ -31,6 +31,37 @@
     </div>
     <div id="ui-layer">
       <div id="button-group">
+        <!-- Media Controls (Left & Top) -->
+        <div class="ui-btn-wrapper" id="wrapper-prev">
+          <div id="prev-btn" class="ui-btn">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+              <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" />
+            </svg>
+          </div>
+        </div>
+        <div class="ui-btn-wrapper" id="wrapper-next">
+          <div id="next-btn" class="ui-btn">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+              <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
+            </svg>
+          </div>
+        </div>
+        <!-- Seek Controls (Bottom) -->
+        <div class="ui-btn-wrapper" id="wrapper-seek-back">
+          <div id="seek-back-btn" class="ui-btn">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+              <path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z" />
+            </svg>
+          </div>
+        </div>
+        <div class="ui-btn-wrapper" id="wrapper-seek-fwd">
+          <div id="seek-fwd-btn" class="ui-btn">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+              <path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z" />
+            </svg>
+          </div>
+        </div>
+        <!-- Utility Controls (Right) -->
         <div class="ui-btn-wrapper" id="wrapper-zoom-out">
           <div id="zoom-out-btn" class="ui-btn">
             <svg viewBox="0 0 24 24" width="24" height="24">
@@ -48,7 +79,8 @@
         <div class="ui-btn-wrapper" id="wrapper-close">
           <div id="close-btn" class="ui-btn" onclick="window.close()">
             <svg viewBox="0 0 24 24" width="24" height="24">
-              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+              <path
+                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
             </svg>
           </div>
         </div>

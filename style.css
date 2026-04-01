@@ -1,10 +1,6 @@
 :root {
   --disc-size: 82%;
   --transition-speed: 0.3s;
-  --bg-transparent: rgba(0, 0, 0, 0);
-  --glass-bg: rgba(255, 255, 255, 0.1);
-  --glass-border: rgba(255, 255, 255, 0.2);
-  --accent-color: #ff3e3e;
 }
 
 *,
@@ -32,7 +28,7 @@ body {
   justify-content: center;
   align-items: center;
   perspective: 1000px;
-  background: rgba(0, 0, 0, 0.001); /* catch hover on transparent areas */
+  background: rgba(0, 0, 0, 0.001);
 }
 
 #circle-shadow {
@@ -109,7 +105,6 @@ body {
   border-radius: 50%;
   z-index: 3;
   pointer-events: none;
-  /* Let clicks pass to #rotator for dragging unless it's a UI element */
 }
 
 #light-reflection {
@@ -142,7 +137,6 @@ body {
   justify-content: center;
   align-items: center;
   pointer-events: auto;
-  /* Enable clicks */
   cursor: pointer;
   -webkit-app-region: no-drag;
 }
@@ -168,7 +162,6 @@ body {
 #center-hole:hover #play-pause-btn {
   opacity: 1;
   transform: scale(1.1);
-  filter: brightness(1.2);
 }
 
 #center-hole:active #play-pause-btn {
@@ -190,7 +183,6 @@ body {
   height: 100%;
   z-index: 10;
   pointer-events: none;
-  /* Crucial: let everything pass to #rotator except buttons */
 }
 
 #button-group {
@@ -219,8 +211,8 @@ body {
 .ui-btn {
   width: 26px;
   height: 26px;
-  margin-top: 8px; /* distance from the outer edge of the CD */
-  background: rgba(0, 0, 0, 0.7);
+  margin-top: 8px;
+  background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
@@ -228,22 +220,68 @@ body {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  opacity: 0.15; /* Always slightly visible so user knows they are there */
+  opacity: 0.15;
   transition: opacity 0.3s ease, background 0.2s ease;
   pointer-events: auto;
   -webkit-app-region: no-drag;
 }
 
-/* Position along the top-right curve */
-#wrapper-zoom-out { transform: rotate(30deg); }
-#wrapper-zoom-out .ui-btn { transform: rotate(-30deg); }
+/* Original Positions Favorites */
+#wrapper-prev {
+  transform: rotate(-55deg);
+}
 
-#wrapper-zoom-in { transform: rotate(55deg); }
-#wrapper-zoom-in .ui-btn { transform: rotate(-55deg); }
+#wrapper-prev .ui-btn {
+  transform: rotate(55deg);
+}
 
-#wrapper-close { transform: rotate(80deg); }
-#wrapper-close .ui-btn { transform: rotate(-80deg); }
+#wrapper-next {
+  transform: rotate(-30deg);
+}
 
+#wrapper-next .ui-btn {
+  transform: rotate(30deg);
+}
+
+#wrapper-seek-back {
+  transform: rotate(155deg);
+}
+
+#wrapper-seek-back .ui-btn {
+  transform: rotate(-155deg);
+}
+
+#wrapper-seek-fwd {
+  transform: rotate(205deg);
+}
+
+#wrapper-seek-fwd .ui-btn {
+  transform: rotate(-205deg);
+}
+
+#wrapper-zoom-out {
+  transform: rotate(30deg);
+}
+
+#wrapper-zoom-out .ui-btn {
+  transform: rotate(-30deg);
+}
+
+#wrapper-zoom-in {
+  transform: rotate(55deg);
+}
+
+#wrapper-zoom-in .ui-btn {
+  transform: rotate(-55deg);
+}
+
+#wrapper-close {
+  transform: rotate(80deg);
+}
+
+#wrapper-close .ui-btn {
+  transform: rotate(-80deg);
+}
 
 .ui-btn svg {
   fill: white;
@@ -265,6 +303,12 @@ body {
   transform: scale(1.2);
 }
 
+.ui-btn:active {
+  transform: scale(0.85) !important;
+  background: rgba(255, 255, 255, 0.4) !important;
+  transition: transform 0.05s ease;
+}
+
 #close-btn:hover {
   background: rgba(255, 60, 60, 0.9) !important;
 }
@@ -279,7 +323,6 @@ body {
   }
 }
 
-/* Scrollbar hidden but functional if needed */
 ::-webkit-scrollbar {
   display: none;
 }
